@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- Meta tag crucial para burlar bloqueios de imagem -->
     <meta name="referrer" content="no-referrer">
     <title>TUBARÃO BEBIDAS | Commander Elite</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,9 +17,8 @@
         .glass { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* Card Sem Cortes com PNG Solto */
-        .product-card { background: #051325; border-radius: 2.2rem; border: 1px solid rgba(255,255,255,0.05); padding: 12px; display: flex; flex-direction: column; align-items: center; min-height: 260px; justify-content: space-between; position: relative; }
-        .img-free { width: 100%; height: 130px; display: flex; align-items: center; justify-content: center; background: transparent !important; }
+        .product-card { background: #051325; border-radius: 2.2rem; border: 1px solid rgba(255,255,255,0.05); padding: 12px; display: flex; flex-direction: column; align-items: center; min-height: 250px; justify-content: space-between; }
+        .img-free { width: 100%; height: 130px; display: flex; align-items: center; justify-content: center; background: transparent; position: relative; }
         .img-free img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6)); }
 
         .switch { position: relative; display: inline-block; width: 38px; height: 20px; }
@@ -30,36 +28,39 @@
         input:checked + .slider { background-color: #0ea5e9; }
         input:checked + .slider:before { transform: translateX(18px); }
 
-        .btn-shark { background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%); }
-        .btn-disabled { opacity: 0.15; filter: grayscale(1); pointer-events: none !important; }
-        .shark-logo { width: 75px; height: 75px; object-fit: contain; filter: drop-shadow(0 0 10px var(--shark-cyan)); }
+        .btn-shark { background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%); transition: 0.3s; }
+        .btn-disabled { opacity: 0.2; filter: grayscale(1); pointer-events: none !important; }
+        .shark-logo { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 10px var(--shark-cyan)); }
         .cat-btn.active { background: var(--shark-cyan); color: #020617; font-weight: 900; box-shadow: 0 0 15px var(--shark-cyan); }
 
-        /* Impressão */
+        /* Estilo da Impressão Corrigido */
+        #print-area { display: none; }
         @media print {
-            body * { visibility: hidden; }
-            #print-section, #print-section * { visibility: visible; }
-            #print-section { position: absolute; left: 0; top: 0; width: 100%; color: black; background: white; font-family: monospace; font-size: 14px; padding: 10px; }
+            body * { display: none !important; }
+            #print-area { display: block !important; width: 300px; color: black !important; background: white !important; font-family: 'Courier New', monospace; padding: 0; margin: 0; font-size: 14px; line-height: 1.2; }
+            #print-area * { display: block !important; }
+            .divider { border-top: 1px dashed black; margin: 5px 0; }
         }
     </style>
 </head>
 <body class="pb-10">
 
-    <div id="print-section" class="hidden"></div>
+    <!-- ÁREA DE IMPRESSÃO TÉRMICA -->
+    <div id="print-area"></div>
 
     <!-- BANNER FECHADO -->
-    <div id="closed-banner" class="hidden fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center p-6 text-center" onclick="triggerSecretAdmin()">
+    <div id="closed-banner" class="hidden fixed inset-0 z-[100] bg-black/98 backdrop-blur-lg flex items-center justify-center p-6 text-center" onclick="triggerSecretAdmin()">
         <div class="max-w-xs space-y-4">
             <i class="fas fa-snowflake text-6xl text-sky-400 animate-pulse"></i>
-            <h2 class="font-shark text-2xl uppercase italic text-white text-center">TUBARÃO EM <span class="text-sky-400">REPOUSO</span></h2>
-            <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest leading-relaxed">Loja fechada. Clique para ADM.</p>
+            <h2 class="font-shark text-2xl uppercase italic text-white text-center">LOJA EM <span class="text-sky-400">DESCANSO</span></h2>
+            <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Fechados agora. Clique aqui para ADM.</p>
         </div>
     </div>
 
     <!-- HEADER -->
-    <header class="ocean-gradient sticky top-0 z-50 px-4 pt-6 pb-4 bg-slate-950/80 backdrop-blur-md border-b border-white/5 shadow-2xl">
+    <header class="ocean-gradient text-white sticky top-0 z-50 px-4 pt-8 pb-5 bg-slate-950/80 backdrop-blur-md border-b border-white/5 shadow-2xl">
         <div class="flex justify-between items-center mb-4">
-            <div class="flex items-center gap-2 cursor-pointer select-none" onclick="triggerSecretAdmin()">
+            <div class="flex items-center gap-3 cursor-pointer select-none" onclick="triggerSecretAdmin()">
                 <img id="main-logo" src="" alt="Shark" class="shark-logo">
                 <div>
                     <h1 class="font-shark text-lg leading-none italic uppercase tracking-tighter text-white">
@@ -68,12 +69,12 @@
                 </div>
             </div>
             <div class="text-right">
-                <span id="status-text" class="text-[7px] font-black uppercase tracking-widest block mb-1 text-cyan-400">STATUS</span>
-                <span id="status-dot" class="inline-block w-2 h-2 rounded-full shadow-[0_0_10px_#00f2ff] bg-cyan-400"></span>
+                <span id="status-text" class="text-[7px] font-black uppercase tracking-widest block mb-1 text-cyan-400 italic tracking-[0.2em]">Sondando...</span>
+                <span id="status-dot" class="inline-block w-2 h-2 rounded-full shadow-[0_0_10px_#00f2ff]"></span>
             </div>
         </div>
         <input type="text" id="searchInput" oninput="filtrarPorNome()" placeholder="O que vamos caçar hoje?" 
-            class="w-full bg-black/40 border border-white/10 py-3 px-6 rounded-2xl text-sm placeholder-white/30 outline-none focus:border-cyan-400 focus:bg-slate-900 transition-all font-bold text-white shadow-inner">
+            class="w-full bg-black/40 border border-white/10 py-3.5 px-6 rounded-2xl text-sm placeholder-white/30 outline-none focus:border-cyan-500 focus:bg-slate-900 transition-all font-bold text-white shadow-inner">
     </header>
 
     <!-- NAV CATEGORIAS -->
@@ -84,17 +85,17 @@
 
     <!-- CARRINHO PILL -->
     <div id="cart-pill" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[55] w-[85%] max-w-xs scale-0 transition-all duration-500">
-        <button onclick="openCart()" class="w-full btn-shark text-white py-4 rounded-full shadow-2xl flex items-center justify-between px-8 font-black uppercase text-xs tracking-widest">
-            <span>Ver Torpedo</span>
-            <span id="pill-count" class="bg-white text-blue-900 px-2.5 py-0.5 rounded-lg font-black">0</span>
+        <button onclick="openCart()" class="w-full btn-shark text-white py-4 rounded-full shadow-2xl flex items-center justify-between px-8 font-black uppercase text-xs">
+            <span>Ver Arsenal</span>
+            <span id="pill-count" class="bg-white text-blue-900 px-2.5 py-0.5 rounded-lg font-black shadow-lg">0</span>
         </button>
     </div>
 
     <!-- MODAL CHECKOUT -->
     <div id="cart-drawer" class="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm hidden flex items-end">
         <div class="w-full max-w-lg mx-auto bg-[#020d1a] rounded-t-[3rem] shadow-2xl border-t border-white/10 overflow-hidden text-white">
-            <div class="p-5 bg-slate-950 flex justify-between items-center border-b border-white/5 font-shark">
-                <span class="text-cyan-400 uppercase text-[10px] tracking-widest italic tracking-tighter">Arsenal Pronto</span>
+            <div class="p-6 bg-slate-950 flex justify-between items-center border-b border-white/5 font-shark">
+                <span class="text-cyan-400 uppercase text-[10px] tracking-widest italic tracking-tighter uppercase">Torpedos Prontos</span>
                 <button onclick="closeCart()" class="text-xl text-slate-500 p-2">&times;</button>
             </div>
             
@@ -102,17 +103,16 @@
 
             <div class="px-6 py-4 bg-white/5 space-y-3">
                 <input type="text" id="cust-name" oninput="validarCheckout()" placeholder="Seu Nome" class="w-full bg-black/40 border border-white/10 p-3 rounded-lg text-sm text-white focus:border-cyan-500 outline-none">
-                <input type="tel" id="cust-whatsapp" oninput="validarCheckout()" placeholder="Seu WhatsApp (DDD + Número)" class="w-full bg-black/40 border border-white/10 p-3 rounded-lg text-sm text-white focus:border-cyan-500 outline-none">
+                <input type="tel" id="cust-whatsapp" oninput="validarCheckout()" placeholder="WhatsApp (DDD + Número)" class="w-full bg-black/40 border border-white/10 p-3 rounded-lg text-sm text-white focus:border-cyan-500 outline-none">
                 
-                <!-- ENDEREÇO SEPARADO -->
                 <div class="grid grid-cols-3 gap-2">
                     <input type="text" id="cust-street" oninput="validarCheckout()" placeholder="Rua / Av" class="col-span-2 bg-black/40 border border-white/10 p-3 rounded-lg text-sm text-white focus:border-cyan-500 outline-none">
                     <input type="text" id="cust-number" oninput="validarCheckout()" placeholder="Nº" class="col-span-1 bg-black/40 border border-white/10 p-3 rounded-lg text-sm text-white focus:border-cyan-500 outline-none">
                 </div>
                 <input type="text" id="cust-neighborhood" oninput="validarCheckout()" placeholder="Bairro" class="w-full bg-black/40 border border-white/10 p-3 rounded-lg text-sm text-white focus:border-cyan-500 outline-none">
 
-                <div class="flex items-center gap-3 bg-black/20 p-4 rounded-xl border border-white/10 cursor-pointer active:bg-sky-900 transition-all" onclick="solicitarLocalizacao()">
-                    <div id="gps-status-circle" class="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center border border-red-500 shadow-[0_0_8px_#ef4444]">
+                <div class="flex items-center gap-3 bg-black/20 p-4 rounded-xl border border-white/10 cursor-pointer transition-all" onclick="solicitarLocalizacao()">
+                    <div id="gps-status-circle" class="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center border border-red-500 shadow-[0_0_8px_red]">
                         <i id="gps-icon" class="fas fa-location-dot text-red-500"></i>
                     </div>
                     <span id="gps-text" class="text-[9px] text-red-500 font-black uppercase italic tracking-tighter">GPS OBRIGATÓRIO PARA FINALIZAR</span>
@@ -121,7 +121,7 @@
                 <select id="cust-payment" onchange="handlePaymentChange(); validarCheckout();" class="w-full bg-black/40 border border-white/10 p-3 rounded-lg text-sm text-white focus:border-cyan-500 font-bold outline-none">
                     <option value="">Forma de Pagamento?</option>
                     <option value="Pix">Pix</option>
-                    <option value="Cartão">Máquina (Entrega)</option>
+                    <option value="Cartão">Cartão</option>
                     <option value="Dinheiro">Dinheiro</option>
                 </select>
                 <input type="text" id="cust-troco" oninput="validarCheckout()" placeholder="Precisa de troco para quanto?" class="hidden w-full bg-sky-900/20 border border-sky-500/30 p-3 rounded-lg text-sm text-white outline-none">
@@ -130,12 +130,12 @@
             <div class="p-6 bg-slate-900 border-t border-white/5">
                 <div class="flex flex-col gap-1 mb-4">
                     <div class="flex justify-between items-center text-white font-black">
-                        <span class="text-slate-500 uppercase italic text-[9px]">Carga Total</span>
+                        <span class="text-slate-500 uppercase italic text-[9px]">Valor do Resgate</span>
                         <span id="cart-total-value" class="text-2xl text-cyan-400 italic font-black">R$ 0,00</span>
                     </div>
                     <p class="text-[8px] text-orange-400 font-black uppercase tracking-widest italic text-center">* TAXA DE ENTREGA A COMBINAR NO WHATSAPP</p>
                 </div>
-                <button id="btn-finalizar" onclick="finalizarPedido()" class="w-full btn-shark btn-disabled text-white py-4 rounded-[1.5rem] font-black text-[10px] uppercase tracking-widest shadow-xl">
+                <button id="btn-finalizar" onclick="finalizarPedido()" class="w-full btn-shark btn-disabled text-white py-5 rounded-[2rem] font-black text-[10px] uppercase tracking-widest shadow-xl">
                     ANIQUILAR SEDE AGORA <i class="fab fa-whatsapp ml-2 text-lg"></i>
                 </button>
             </div>
@@ -146,61 +146,60 @@
     <section id="admin-panel" class="hidden fixed inset-0 bg-slate-950 z-[110] p-6 overflow-y-auto">
         <div class="max-w-4xl mx-auto pb-40 text-white">
             <div class="flex justify-between items-center mb-10 text-cyan-400 font-shark text-2xl italic uppercase tracking-tighter">
-                <h2>LOGÍSTICA SHARK</h2>
-                <button onclick="exitAdmin()" class="bg-red-600 text-white px-5 py-2 rounded-full text-[10px] font-black uppercase shadow-lg">SAIR DO PAINEL</button>
+                <h2>CENTRO DE COMANDO ELITE</h2>
+                <button onclick="exitAdmin()" class="bg-red-600 text-white px-5 py-2 rounded-full text-[10px] font-black shadow-lg">SAIR</button>
             </div>
-            
+
             <!-- TABS -->
             <div class="flex gap-2 mb-8 overflow-x-auto no-scrollbar">
-                <button onclick="switchTab('tab-stock')" class="bg-slate-800 px-6 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap">Estoque</button>
-                <button onclick="switchTab('tab-orders')" class="bg-slate-800 px-6 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap">Pedidos Ativos</button>
-                <button onclick="switchTab('tab-settings')" class="bg-slate-800 px-6 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap">Ajustes Site</button>
+                <button onclick="switchTab('tab-stock')" class="bg-slate-800 px-6 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap">Arsenal (Estoque)</button>
+                <button onclick="switchTab('tab-orders')" class="bg-slate-800 px-6 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap italic">Logística / Tickets</button>
+                <button onclick="switchTab('tab-settings')" class="bg-slate-800 px-6 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap">Marca</button>
             </div>
 
             <!-- TAB ESTOQUE -->
             <div id="tab-stock" class="adm-tab space-y-6">
                 <div class="glass p-6 rounded-[2.5rem] space-y-4">
-                    <p class="text-[10px] font-black text-cyan-400 uppercase italic">Nova Categoria</p>
+                    <p class="text-[10px] font-black text-cyan-400 uppercase italic">Categorias</p>
                     <div class="flex gap-2">
-                        <input id="new-cat-name" type="text" placeholder="Ex: Vinhos" class="flex-1 p-3 bg-black/40 border border-white/10 rounded-xl outline-none">
-                        <button onclick="addCategory()" class="bg-green-600 px-6 rounded-xl font-black text-xs uppercase">Criar</button>
+                        <input id="new-cat-name" type="text" placeholder="Nome" class="flex-1 p-3 bg-black/40 border border-white/10 rounded-xl text-white outline-none">
+                        <button onclick="addCategory()" class="bg-green-600 px-6 rounded-xl font-black text-xs">CRIAR</button>
                     </div>
                     <div id="admin-cat-list" class="flex flex-wrap gap-2"></div>
                 </div>
 
-                <div class="glass p-8 rounded-[3rem] space-y-6 border-white/10">
-                    <p class="text-[10px] font-black text-cyan-400 uppercase italic tracking-tighter">Adicionar Bebida</p>
+                <div class="glass p-8 rounded-[3rem] space-y-6 border-white/10 shadow-2xl">
                     <input id="edit-id" type="hidden">
-                    <input id="adm-name" type="text" placeholder="Nome" class="w-full p-4 bg-black/40 border border-white/10 rounded-xl text-white outline-none">
-                    <input id="adm-img" type="text" placeholder="URL da Imagem (Ambev/Internet/PNG)" class="w-full p-4 bg-black/40 border border-white/10 rounded-xl text-[10px] text-cyan-200">
+                    <input id="adm-name" type="text" placeholder="Nome da Bebida" class="w-full p-4 bg-slate-900 border border-white/10 rounded-xl text-white outline-none">
+                    <input id="adm-img" type="text" placeholder="Link da Imagem PNG (Ambev/Internet)" class="w-full p-4 bg-slate-900 border border-white/10 rounded-xl text-[10px] text-cyan-200">
                     <div class="grid grid-cols-2 gap-4">
-                        <input id="adm-price" type="number" step="0.01" placeholder="Preço" class="p-4 bg-black/40 border border-white/10 rounded-xl font-black">
-                        <select id="adm-cat-select" class="p-4 bg-black/40 border border-white/10 rounded-xl font-black uppercase text-xs text-sky-400"></select>
+                        <input id="adm-price" type="number" step="0.01" placeholder="Preço" class="p-4 bg-slate-900 border border-white/10 rounded-xl font-black text-white outline-none">
+                        <select id="adm-cat-select" class="p-4 bg-slate-900 border border-white/10 rounded-xl font-black uppercase text-xs text-sky-400"></select>
                     </div>
                     <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10">
-                        <span class="text-xs font-black uppercase italic text-cyan-200">Está Trincando (Gelada)?</span>
+                        <span class="text-xs font-black uppercase italic text-cyan-200">Selo Trincando (Gelada)?</span>
                         <label class="switch"><input type="checkbox" id="adm-chilled" checked><span class="slider"></span></label>
                     </div>
-                    <button onclick="salvarProduto()" id="btn-save-admin" class="w-full btn-shark font-black py-5 rounded-[2rem] uppercase tracking-widest text-white shadow-xl">Confirmar Item</button>
+                    <button onclick="salvarProduto()" id="btn-save-admin" class="w-full btn-shark font-black py-5 rounded-[2rem] uppercase tracking-widest text-white shadow-xl">Salvar no Arsenal</button>
                 </div>
                 <div id="admin-list" class="space-y-4"></div>
             </div>
 
-            <!-- TAB PEDIDOS -->
+            <!-- TAB LOGISTICA -->
             <div id="tab-orders" class="adm-tab hidden space-y-4">
                 <div id="orders-list" class="space-y-4"></div>
             </div>
 
-            <!-- TAB SETTINGS -->
+            <!-- TAB MARCA -->
             <div id="tab-settings" class="adm-tab hidden space-y-6">
-                <div class="glass p-8 rounded-[3rem] space-y-6">
+                <div class="glass p-8 rounded-[2.5rem] space-y-4 text-white">
                     <div class="flex items-center justify-between p-5 bg-white/5 rounded-2xl border border-white/10">
-                        <span id="adm-status-label" class="text-sm font-black uppercase italic tracking-widest text-white">Loja</span>
+                        <span id="adm-status-label" class="text-sm font-black uppercase italic text-white tracking-widest">Sincronizando...</span>
                         <label class="switch"><input type="checkbox" id="adm-store-status" onchange="toggleStoreOpen(this.checked)"><span class="slider"></span></label>
                     </div>
-                    <input id="set-logo" type="text" placeholder="Link da Logo PNG" class="w-full p-4 bg-black/40 border border-white/10 rounded-xl text-xs text-cyan-200 outline-none">
-                    <input id="set-whatsapp" type="text" placeholder="WhatsApp (55...)" class="w-full p-4 bg-black/40 border border-white/10 rounded-xl text-xs">
-                    <button onclick="salvarConfiguracoes()" class="w-full bg-cyan-600 font-black py-4 rounded-xl text-xs uppercase shadow-xl">Salvar Tudo</button>
+                    <input id="set-logo" type="text" placeholder="URL da Logo PNG" class="w-full p-4 bg-slate-900 border border-white/10 rounded-xl text-xs text-cyan-200 outline-none">
+                    <input id="set-whatsapp" type="text" placeholder="Seu WhatsApp (Ex: 5511...)" class="w-full p-4 bg-slate-900 border border-white/10 rounded-xl text-xs">
+                    <button onclick="salvarConfiguracoes()" class="w-full bg-cyan-600 font-black py-4 rounded-xl text-xs uppercase shadow-xl">Salvar Marca</button>
                 </div>
             </div>
         </div>
@@ -213,13 +212,10 @@
         const _supabase = supabase.createClient(SB_URL, SB_KEY);
         let cart = {}, locationData = null, allProducts = [], siteSettings = {}, categories = [], currentFilter = '', adminClicks = 0;
 
-        // --- BYPASS PROXY PARA IMAGENS AMBEV/EXTERNAS ---
+        // --- BYPASS DE IMAGEM (AMBEV/EXTERNAL) ---
         function proxyUrl(url) {
             if(!url) return 'https://cdn-icons-png.flaticon.com/512/3122/3122410.png';
-            if(url.includes('catalogoambev.com.br') || url.includes('pin.it') || url.includes('pinimg.com')) {
-                return `https://images.weserv.nl/?url=${encodeURIComponent(url)}&n=-1&output=png`;
-            }
-            return url;
+            return `https://wsrv.nl/?url=${encodeURIComponent(url)}&n=-1&output=png`;
         }
 
         async function init() { 
@@ -227,7 +223,7 @@
             await carregarCategorias();
             await carregarProdutos(); 
             recuperarCarrinho(); 
-            if(localStorage.getItem('shark_admin_session_v10') === 'true') {
+            if(localStorage.getItem('shark_admin_final') === 'true') {
                 document.getElementById('admin-panel').classList.remove('hidden');
                 carregarPedidos();
             }
@@ -236,10 +232,10 @@
         function triggerSecretAdmin() {
             adminClicks++;
             if(adminClicks === 3) { adminClicks = 0; checkAdminAccess(); }
-            setTimeout(() => { adminClicks = 0; }, 1200);
+            setTimeout(() => { adminClicks = 0; }, 1500);
         }
-        function checkAdminAccess() { if(prompt("Senha:") === "tubarao123") { localStorage.setItem('shark_admin_session_v10', 'true'); document.getElementById('admin-panel').classList.remove('hidden'); carregarPedidos(); } }
-        function exitAdmin() { localStorage.removeItem('shark_admin_session_v10'); document.getElementById('admin-panel').classList.add('hidden'); }
+        function checkAdminAccess() { if(prompt("Senha do Predador:") === "tubarao123") { localStorage.setItem('shark_admin_final', 'true'); document.getElementById('admin-panel').classList.remove('hidden'); carregarPedidos(); } }
+        function exitAdmin() { localStorage.removeItem('shark_admin_final'); document.getElementById('admin-panel').classList.add('hidden'); }
         function switchTab(tabId) { document.querySelectorAll('.adm-tab').forEach(t => t.classList.add('hidden')); document.getElementById(tabId).classList.remove('hidden'); }
 
         async function carregarConfiguracoes() {
@@ -285,16 +281,16 @@
         function renderProducts() {
             const catalog = document.getElementById('catalog');
             const list = allProducts.filter(p => p.category === currentFilter && p.is_available);
-            catalog.innerHTML = list.length === 0 ? '<p class="col-span-full text-center py-20 opacity-30 uppercase font-black text-xs text-white">Arsenal Vazio...</p>' : '';
+            catalog.innerHTML = list.length === 0 ? '<p class="col-span-full text-center py-20 opacity-30 uppercase font-black text-xs text-white">Vazio...</p>' : '';
             list.forEach(p => {
                 const qty = cart[p.id]?.qty || 0;
                 catalog.innerHTML += `
                     <div class="product-card">
                         <div class="img-free">
-                            <img src="${proxyUrl(p.image_url)}" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3122/3122410.png'">
-                            ${p.is_chilled ? `<span class="absolute top-0 right-0 bg-cyan-500 text-white text-[7px] font-black px-1.5 py-0.5 rounded-full uppercase italic shadow-lg">TRINCANDO</span>` : ''}
+                            <img src="${proxyUrl(p.image_url)}" crossorigin="anonymous" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3122/3122410.png'">
+                            ${p.is_chilled ? `<span class="absolute top-0 right-0 bg-cyan-500 text-white text-[7px] font-black px-1.5 py-0.5 rounded-full uppercase italic shadow-lg shadow-cyan-500/20">TRINCANDO</span>` : ''}
                         </div>
-                        <h3 class="text-[10px] font-black text-center uppercase text-white leading-tight mb-2 h-auto w-full px-1">${p.name}</h3>
+                        <h3 class="text-[10px] font-bold text-center uppercase text-white leading-tight mb-2 h-auto w-full px-1">${p.name}</h3>
                         <span class="text-cyan-400 font-black text-lg my-2 italic tracking-tighter">R$ ${Number(p.price).toFixed(2)}</span>
                         <div class="flex items-center bg-slate-950/80 rounded-2xl p-1.5 w-full justify-between border border-white/5 shadow-2xl">
                             <button onclick="changeQty('${p.id}', -1)" class="w-8 h-8 bg-slate-900 rounded-lg text-cyan-400 font-black">-</button>
@@ -305,36 +301,55 @@
             });
         }
 
+        // --- GESTÃO LOGÍSTICA ---
         async function carregarPedidos() {
-            const { data } = await _supabase.from('orders').select('*').order('created_at', { ascending: false }).limit(20);
+            const { data } = await _supabase.from('orders').select('*').order('created_at', { ascending: false }).limit(25);
             const list = document.getElementById('orders-list');
             list.innerHTML = '';
             data?.forEach(o => {
+                const isEntregue = o.status === 'Entregue';
                 list.innerHTML += `
-                    <div class="glass p-5 rounded-[2.5rem] space-y-3">
+                    <div class="glass p-6 rounded-[2.5rem] space-y-4 ${isEntregue ? 'opacity-40 grayscale' : ''}">
                         <div class="flex justify-between items-start">
-                            <div><p class="text-xs font-black uppercase text-cyan-400 italic">${o.customer_name}</p><p class="text-[8px] text-slate-500">${new Date(o.created_at).toLocaleString()}</p></div>
-                            <span class="bg-sky-500/20 text-sky-400 text-[8px] font-black px-2 py-1 rounded-full">${o.status}</span>
+                            <div><p class="text-xs font-black uppercase text-cyan-400 italic">${o.customer_name}</p><p class="text-[9px] text-slate-500 uppercase font-black">${new Date(o.created_at).toLocaleString()}</p></div>
+                            <span class="px-3 py-1 rounded-full text-[8px] font-black uppercase ${isEntregue ? 'bg-green-500/20 text-green-400' : 'bg-orange-500/20 text-orange-400'}">${o.status}</span>
                         </div>
-                        <p class="text-[10px] text-slate-300 italic border-l-2 border-cyan-500/20 pl-3">END: ${o.street}, ${o.number} - ${o.neighborhood}</p>
+                        <p class="text-[10px] text-slate-200 italic border-l-2 border-cyan-500/30 pl-3">Rua: ${o.street}, ${o.number} - ${o.neighborhood}</p>
+                        <p class="text-[9px] text-slate-400">${o.items}</p>
                         <div class="flex gap-2">
-                            <button onclick="imprimirTicket('${o.id}')" class="bg-white text-black px-4 py-2 rounded-xl text-[10px] font-black uppercase shadow-lg">🖨️ Ticket</button>
-                            <button onclick="notificarRota('${o.customer_whatsapp}', '${o.customer_name}')" class="flex-1 bg-cyan-600 text-white py-3 rounded-2xl text-[9px] font-black uppercase shadow-lg">🛵 EM ROTA</button>
-                            <button onclick="window.open('${o.gps_url}')" class="bg-red-600 text-white px-4 rounded-2xl flex items-center shadow-lg"><i class="fas fa-location-arrow"></i></button>
+                            <button onclick="imprimirTicket('${o.id}')" class="bg-white text-black px-4 py-2 rounded-xl text-[10px] font-black uppercase">🖨️ Ticket</button>
+                            ${!isEntregue ? `<button onclick="alterarStatus('${o.id}', 'Entregue')" class="bg-green-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase">Finalizar ✔️</button>` : ''}
+                            <button onclick="notificarRota('${o.customer_whatsapp}', '${o.customer_name}')" class="flex-1 bg-cyan-600 text-white py-2 rounded-xl text-[10px] font-black uppercase">🛵 ROTA</button>
+                            <button onclick="window.open('${o.gps_url}')" class="bg-red-600 text-white px-4 rounded-2xl flex items-center"><i class="fas fa-location-dot"></i></button>
                         </div>
                     </div>`;
             });
         }
 
+        async function alterarStatus(id, st) { await _supabase.from('orders').update({ status: st }).eq('id', id); carregarPedidos(); }
+
         async function imprimirTicket(orderId) {
             const { data } = await _supabase.from('orders').select('*').eq('id', orderId).single();
-            const printArea = document.getElementById('print-section');
+            const printArea = document.getElementById('print-area');
             printArea.innerHTML = `
-                <div style="text-align:center; border-bottom:1px dashed #000; padding-bottom:5px;"><strong>🦈 TUBARÃO BEBIDAS 🦈</strong><br>${new Date(data.created_at).toLocaleString()}</div>
-                <div style="margin-top:10px;"><strong>CLIENTE:</strong> ${data.customer_name.toUpperCase()}<br><strong>END:</strong> ${data.street.toUpperCase()}, ${data.number} - ${data.neighborhood.toUpperCase()}</div>
-                <div style="margin-top:10px; border-bottom:1px dashed #000; padding-bottom:5px;"><strong>ITENS:</strong><br>${data.items}</div>
-                <div style="margin-top:10px;"><strong>PAGAMENTO:</strong> ${data.payment_method.toUpperCase()} ${data.change_for ? '(Troco: '+data.change_for+')' : ''}<br><span style="font-size:16px;"><strong>TOTAL: ${data.total}</strong></span></div>
-                <div style="text-align:center; margin-top:15px;">O PREDADOR DA SEDE!</div>`;
+                <div style="text-align:center;">
+                    <strong style="font-size:18px;">🦈 TUBARÃO BEBIDAS 🦈</strong><br>
+                    ${new Date(data.created_at).toLocaleString()}
+                </div>
+                <div class="divider"></div>
+                <strong>CLIENTE:</strong> ${data.customer_name.toUpperCase()}<br>
+                <strong>ZAP:</strong> ${data.customer_whatsapp}<br>
+                <strong>END:</strong> ${data.street.toUpperCase()}, ${data.number}<br>
+                <strong>BAIRRO:</strong> ${data.neighborhood.toUpperCase()}
+                <div class="divider"></div>
+                <strong>PEDIDO:</strong><br>
+                ${data.items.split(', ').join('<br>')}
+                <div class="divider"></div>
+                <strong>PAGAMENTO:</strong> ${data.payment_method.toUpperCase()}<br>
+                ${data.change_for ? '<strong>TROCO PARA:</strong> '+data.change_for+'<br>' : ''}
+                <strong style="font-size:20px;">TOTAL: ${data.total}</strong>
+                <div class="divider"></div>
+                <div style="text-align:center; font-style:italic;">O PREDADOR DA SEDE!</div>`;
             window.print();
         }
 
@@ -343,6 +358,7 @@
             window.open(`https://wa.me/${zap}?text=${msg}`);
         }
 
+        // --- FINALIZAÇÃO E LÓGICA ---
         async function finalizarPedido() {
             const n = document.getElementById('cust-name').value, w = document.getElementById('cust-whatsapp').value, 
                   s = document.getElementById('cust-street').value, num = document.getElementById('cust-number').value,
@@ -358,47 +374,23 @@
             limparCarrinho(); closeCart();
         }
 
-        // --- AUXILIARES ---
-        function changeQty(id, delta) {
-            if(!siteSettings.is_open) return;
-            const product = allProducts.find(p => p.id === id);
-            if(!cart[id]) cart[id] = { name: product.name, price: Number(product.price), qty: 0 };
-            cart[id].qty += delta; if(cart[id].qty <= 0) delete cart[id];
-            updateUI(); saveCart();
-        }
-        function updateUI() {
-            const total = Object.values(cart).reduce((acc, cur) => acc + (cur.price * cur.qty), 0);
-            const totalItems = Object.values(cart).reduce((acc, cur) => acc + cur.qty, 0);
-            document.getElementById('cart-total-value').innerText = `${total.toFixed(2)}`;
-            const pill = document.getElementById('cart-pill'), pCount = document.getElementById('pill-count');
-            pCount.innerText = totalItems;
-            if(totalItems > 0 && siteSettings.is_open) pill.classList.remove('scale-0'); else pill.classList.add('scale-0');
-            allProducts.forEach(p => { const el = document.getElementById(`qty-${p.id}`); if(el) el.innerText = cart[p.id]?.qty || 0; });
-            validarCheckout();
-        }
-        function openCart() { document.getElementById('cart-drawer').classList.remove('hidden'); renderCartList(); }
-        function closeCart() { document.getElementById('cart-drawer').classList.add('hidden'); }
-        function renderCartList() {
-            const list = document.getElementById('cart-items-list');
-            list.innerHTML = '';
-            Object.values(cart).forEach(i => list.innerHTML += `<div class="flex justify-between text-[11px] font-black border-b border-white/5 pb-2 uppercase italic text-cyan-400"><span>${i.qty}x ${i.name}</span><span>R$ ${(i.qty*i.price).toFixed(2)}</span></div>`);
-        }
-        function filtrar(name) { currentFilter = name; carregarCategorias(); renderProducts(); }
         function solicitarLocalizacao() {
             navigator.geolocation.getCurrentPosition((pos) => {
                 locationData = pos.coords;
                 document.getElementById('gps-status-circle').className = "w-8 h-8 bg-green-500/10 rounded-full flex items-center justify-center border border-green-500 shadow-[0_0_10px_#22c55e]";
                 document.getElementById('gps-icon').className = "fas fa-check-circle text-green-500";
-                document.getElementById('gps-text').innerText = "RASTREADO!";
-                document.getElementById('gps-text').className = "text-[9px] text-green-400 font-black";
+                document.getElementById('gps-text').innerText = "ALVO RASTREADO!";
+                document.getElementById('gps-text').className = "text-[9px] text-green-400 font-black italic";
                 validarCheckout();
             }, () => alert("Erro: Ative o GPS!"));
         }
+
         function handlePaymentChange() {
             const p = document.getElementById('cust-payment').value, t = document.getElementById('cust-troco');
             (p === 'Dinheiro') ? t.classList.remove('hidden') : (t.classList.add('hidden'), t.value = '');
             validarCheckout();
         }
+
         function validarCheckout() {
             const n = document.getElementById('cust-name').value, w = document.getElementById('cust-whatsapp').value, 
                   s = document.getElementById('cust-street').value, num = document.getElementById('cust-number').value, 
@@ -409,6 +401,34 @@
             if(p === 'Dinheiro' && t.trim() === '') ok = false;
             if(ok) btn.classList.remove('btn-disabled'); else btn.classList.add('btn-disabled');
         }
+
+        function changeQty(id, delta) {
+            if(!siteSettings.is_open) return;
+            const product = allProducts.find(p => p.id === id);
+            if(!cart[id]) cart[id] = { name: product.name, price: Number(product.price), qty: 0 };
+            cart[id].qty += delta; if(cart[id].qty <= 0) delete cart[id];
+            updateUI(); saveCart();
+        }
+
+        function updateUI() {
+            const total = Object.values(cart).reduce((acc, cur) => acc + (cur.price * cur.qty), 0);
+            const totalItems = Object.values(cart).reduce((acc, cur) => acc + cur.qty, 0);
+            document.getElementById('cart-total-value').innerText = `${total.toFixed(2)}`;
+            const pill = document.getElementById('cart-pill'), pCount = document.getElementById('pill-count');
+            pCount.innerText = totalItems;
+            if(totalItems > 0 && siteSettings.is_open) pill.classList.remove('scale-0'); else pill.classList.add('scale-0');
+            allProducts.forEach(p => { const el = document.getElementById(`qty-${p.id}`); if(el) el.innerText = cart[p.id]?.qty || 0; });
+            validarCheckout();
+        }
+
+        function openCart() { document.getElementById('cart-drawer').classList.remove('hidden'); renderCartList(); }
+        function closeCart() { document.getElementById('cart-drawer').classList.add('hidden'); }
+        function renderCartList() {
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = '';
+            Object.values(cart).forEach(i => list.innerHTML += `<div class="flex justify-between text-[11px] font-black border-b border-white/5 pb-2 uppercase italic text-cyan-400"><span>${i.qty}x ${i.name}</span><span>R$ ${(i.qty*i.price).toFixed(2)}</span></div>`);
+        }
+        function filtrar(name) { currentFilter = name; carregarCategorias(); renderProducts(); }
         async function toggleStoreOpen(status) { await _supabase.from('site_settings').update({ is_open: status }).eq('id', 1); carregarConfiguracoes(); }
         async function salvarConfiguracoes() { await _supabase.from('site_settings').update({ logo_url: document.getElementById('set-logo').value, whatsapp_number: document.getElementById('set-whatsapp').value }).eq('id', 1); location.reload(); }
         async function toggleDisp(id, s) { await _supabase.from('products').update({ is_available: s }).eq('id', id); carregarProdutos(); }
@@ -427,7 +447,7 @@
             data.forEach(p => {
                 list.innerHTML += `
                     <div class="glass p-3 rounded-2xl flex justify-between items-center ${!p.is_available ? 'opacity-25 grayscale' : ''} mb-2">
-                        <div class="flex items-center gap-3"><img src="${proxyUrl(p.image_url)}" referrerpolicy="no-referrer" class="w-12 h-12 object-contain bg-slate-900 rounded-2xl p-1"><p class="text-[10px] font-black uppercase text-white leading-none">${p.name}</p></div>
+                        <div class="flex items-center gap-3"><img src="${proxyUrl(p.image_url)}" class="w-12 h-12 object-contain bg-slate-900 rounded-2xl p-1"><p class="text-[10px] font-black uppercase text-white">${p.name}</p></div>
                         <div class="flex items-center gap-4 text-white">
                             <label class="switch"><input type="checkbox" ${p.is_available ? 'checked' : ''} onchange="toggleDisp('${p.id}', this.checked)"><span class="slider"></span></label>
                             <button onclick='prepararEdicao(${JSON.stringify(p)})' class="text-cyan-400 text-xl"><i class="fas fa-edit"></i></button>
@@ -438,8 +458,8 @@
         }
         function prepararEdicao(p) { document.getElementById('edit-id').value = p.id; document.getElementById('adm-name').value = p.name; document.getElementById('adm-price').value = p.price; document.getElementById('adm-img').value = p.image_url; document.getElementById('adm-cat-select').value = p.category; document.getElementById('adm-chilled').checked = p.is_chilled; window.scrollTo({top:0, behavior:'smooth'}); }
         async function removerProduto(id) { if(confirm("Remover?")) { await _supabase.from('products').delete().eq('id', id); carregarProdutos(); } }
-        function saveCart() { localStorage.setItem('shark_v10', JSON.stringify(cart)); }
-        function recuperarCarrinho() { const saved = localStorage.getItem('shark_v10'); if(saved) { cart = JSON.parse(saved); updateUI(); } }
+        function saveCart() { localStorage.setItem('shark_final_vFinal_Elite', JSON.stringify(cart)); }
+        function recuperarCarrinho() { const saved = localStorage.getItem('shark_final_vFinal_Elite'); if(saved) { cart = JSON.parse(saved); updateUI(); } }
         function filtrarPorNome() { const term = document.getElementById('searchInput').value.toLowerCase(); renderProducts(); }
 
         init();
